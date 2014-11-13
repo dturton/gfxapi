@@ -1,0 +1,42 @@
+<ui-select ng-model="region.selected" theme="selectize" ng-disabled="disabled" data-ng-change="clear()" style="width: 300px;">
+    <ui-select-match placeholder="Select a region...">{{$select.selected.region}}</ui-select-match>
+    <ui-select-choices repeat="region in regions | filter: $select.search">
+      <span ng-bind-html="region.region | highlight: $select.search"></span>
+  </ui-select-choices>
+</ui-select>
+
+
+<ui-select ng-model="year.selected" theme="selectize" ng-disabled="!region.selected" data-ng-change="getMakes(year.selected, region.selected.region)" style="width: 300px;">
+    <ui-select-match placeholder="Select a year...">{{$select.selected.year}}</ui-select-match>
+    <ui-select-choices repeat="year in years | filter: $select.search">
+      <span ng-bind-html="year.year | highlight: $select.search"></span>
+	</ui-select-choices>
+</ui-select>
+
+
+<ui-select ng-model="make.selected" theme="selectize" ng-disabled="!year.selected" style="width: 300px;">
+    <ui-select-match placeholder="Select a make...">{{$select.selected.makename}}</ui-select-match>
+    <ui-select-choices repeat="make in results | filter: $select.search | unique:'makename' | orderBy: 'makename' ">
+      <span ng-bind-html="make.makename | highlight: $select.search"></span>
+    </ui-select-choices>
+</ui-select>
+
+
+<ui-select ng-model="model.selected" theme="selectize" ng-disabled="!make.selected" style="width: 300px;">
+    <ui-select-match placeholder="Select Model...">{{$select.selected.modelname}}</ui-select-match>
+    <ui-select-choices repeat="model in results  | unique:'modelname' | orderBy: 'modelname' | filter: {makename: make.selected.makename}  | filter: $select.search">
+      <span ng-bind-html="model.modelname | highlight: $select.search"></span>
+    </ui-select-choices>
+</ui-select>
+
+
+<ui-select ng-model="submodel.selected" theme="selectize" ng-disabled="!model.selected" style="width: 300px;">
+    <ui-select-match placeholder="Select Submodel...">{{$select.selected.submodelname}}</ui-select-match>
+    <ui-select-choices repeat="submodel in results  | orderBy: 'submodelname' | filter: {'modelname': model.selected.modelname}:true  | filter: $select.search">
+      <span ng-bind-html="submodel.submodelname | highlight: $select.search"></span>
+    </ui-select-choices>
+</ui-select>
+
+
+
+<h3>Transmission: {{submodel.selected.transmissionmfrcode}}</h3>

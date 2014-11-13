@@ -1,0 +1,15 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "acesresults": {
+    "host": "localhost",
+    "port": 3306,
+    "database": "acesresults",
+    "password": "joh@na12",
+    "name": "acesresults",
+    "user": "root",
+    "connector": "mysql"
+  }
+}
